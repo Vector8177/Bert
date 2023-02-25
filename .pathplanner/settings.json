@@ -1,0 +1,12 @@
+{
+<<<<<<< HEAD
+  "robotWidth": 0.52705,
+  "robotLength": 0.52705,
+=======
+  "robotWidth": 0.6604,
+  "robotLength": 0.6604,
+>>>>>>> ElevatorBranch
+  "holonomicMode": true,
+  "generateJSON": false,
+  "generateCSV": false
+}
