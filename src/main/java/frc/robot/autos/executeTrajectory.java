@@ -2,6 +2,7 @@ package frc.robot.autos;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -28,13 +29,13 @@ public class executeTrajectory extends SequentialCommandGroup {
         s_Swerve::setModuleStates,
         s_Swerve);
 
-    if(setInitialPose){
-    addCommands(
-        new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialHolonomicPose())),
-        swerveControllerCommand);
-    } else{
-        addCommands(
-            swerveControllerCommand);
+    if (setInitialPose) {
+      addCommands(
+          new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialHolonomicPose())),
+          swerveControllerCommand);
+    } else {
+      addCommands(
+          swerveControllerCommand);
     }
   }
 }

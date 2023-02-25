@@ -1,16 +1,10 @@
 package frc.robot;
 
-import java.util.ArrayList;
-
 import com.pathplanner.lib.PathConstraints;
 import com.revrobotics.CANSparkMax.IdleMode;
 
-import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.lib.config.SwerveModuleConstants;
@@ -22,7 +16,7 @@ public final class Constants {
 
     public static final int pigeonID = 6;
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
-    //TODO
+
     /* Drivetrain Constants */
     public static final double trackWidth = Units.inchesToMeters(20.75);
     public static final double wheelBase = Units.inchesToMeters(20.75);
@@ -48,13 +42,6 @@ public final class Constants {
     public static final int angleContinuousCurrentLimit = 20;
     public static final int driveContinuousCurrentLimit = 80;
 
-    public static final double pitchSetPoint = 0.0;
-
-    public static final double drivePitchKP = 0.04;
-    public static final double drivePitchKI = 0.00005;
-    public static final double drivePitchKD = 0.000000000000001;
-    public static final double drivePitchKFF = 0.000000000000001;
-
     /* Angle Motor PID Values */
     public static final double angleKP = 0.01;
     public static final double angleKI = 0.0;
@@ -62,7 +49,7 @@ public final class Constants {
     public static final double angleKFF = 0.0;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0.1;
+    public static final double driveKP = 0.0;
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
     public static final double driveKFF = 0.0;
@@ -95,7 +82,6 @@ public final class Constants {
     /* Angle Encoder Invert */
     public static final boolean canCoderInvert = false;
 
-  
     /* Module Specific Constants */
     /* Front Left Module - Module 0 */
     public static final class Mod0 {
@@ -149,125 +135,5 @@ public final class Constants {
     public static final double kPXController = 1;
     public static final double kPYController = 1;
     public static final double kPThetaController = 1;
-  }
-
-  public static final class PhotonVision{
-    public static final String photonVisionName = "OV5647";
-    public static final Transform3d robotToCam =
-    new Transform3d(
-            new Translation3d(Units.inchesToMeters(11.4), 0.0, Units.inchesToMeters(6.4)),
-            new Rotation3d(
-                    0, 0,
-                    0));
-  }
-
-  public static final class AprilTags {
-    public static final AprilTag tag1 = new AprilTag(1, FieldConstants.aprilTags.get(1));
-    public static final AprilTag tag2 = new AprilTag(2, FieldConstants.aprilTags.get(2));
-    public static final AprilTag tag3 = new AprilTag(3, FieldConstants.aprilTags.get(3));
-    public static final AprilTag tag4 = new AprilTag(4, FieldConstants.aprilTags.get(4));
-    public static final AprilTag tag5 = new AprilTag(5, FieldConstants.aprilTags.get(5));
-    public static final AprilTag tag6 = new AprilTag(6, FieldConstants.aprilTags.get(6));
-    public static final AprilTag tag7 = new AprilTag(7, FieldConstants.aprilTags.get(7));
-    public static final AprilTag tag8 = new AprilTag(8, FieldConstants.aprilTags.get(8));
-    public static final ArrayList<AprilTag> aprilTagList = new ArrayList<>();
-
-    static {
-      aprilTagList.add(tag1);
-      aprilTagList.add(tag2);
-      aprilTagList.add(tag3);
-      aprilTagList.add(tag4);
-      aprilTagList.add(tag5);
-      aprilTagList.add(tag6);
-      aprilTagList.add(tag7);
-      aprilTagList.add(tag8);
-    }
-  }
-
-  public static final class Elevator{
-    public static final int motorLeftId = 51;
-    public static final int canConderLeftId = 61;
-
-    public static final int motorRightId = 52;
-    public static final int canConderRightId = 62;
-
-    public static final double elevatorKP = .01;
-    public static final double elevatorKI = .01;
-    public static final double elevatorKD = .01;
-    public static final double elevatorKF = .01;
-
-    public static final double cone1 = 0;
-    public static final double cone2 = 1;
-    public static final double cone3 = 2;
-
-    public static final double cube1 = 0;
-    public static final double cube2 = 1;
-    public static final double cube3 = 2;
-
-    public static final double maxMotorSpeed = .5;
-
-  }
-
-  public enum SEGMENT { // Numbers in order of segment from left to right (driver station POV)
-    CONE_1(0), CONE_2(1), CONE_3(3), CONE_4(-1), CONE_5(-1), CONE_6(-1),
-    CUBE_1(0), CUBE_2(1), CUBE_3(3);
-
-    private int level;
-
-    private SEGMENT(int level){
-      this.level = level;
-    }
-
-    public static SEGMENT getSegment(int level, boolean cone){
-      if(cone){
-        switch(level){
-            case 1: return CONE_1;
-            case 2: return CONE_2;
-            case 3: return CONE_3;
-        }
-      }
-      else{
-        switch(level){
-            case 1: return CUBE_1;
-            case 2: return CUBE_2;
-            case 3: return CUBE_3;
-        }
-      }
-      return null;
-    }
-
-    public int getValue(){
-      return level;
-    }
-    
-  }
-  public static final class WristConstants{
-    public static final int wristMotorId = 59;
-  }
-  public static final class IntakeConstants{
-    
-    public static final int intakeMotorId = 58; 
-    
-    public static final int pdpChannel = 2; //update number later
-
-    public static final double coneIntakeSpeed = 1; 
-    public static final double cubeIntakeSpeed = 1; 
-
-    public static final double outtakeSpeed = 1; 
-
-    public static final double maxCurrentIntake = 80; 
-
-    //wheel diameter, gear ratio, encoder constants
-        //will need to change depending on the robot/swerve
-        //the below value will need to be change not accurate for our robot 
-        public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
-        public static final double kDriveMotorGearRatio = 1 / 5.8462;
-        public static final double kTurningMotorGearRatio = 1 / 18.0;
-        public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
-        public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
-        public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
-        public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
-        public static final double kPTurning = 0.5;
-
   }
 }

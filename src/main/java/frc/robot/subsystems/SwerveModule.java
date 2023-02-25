@@ -32,7 +32,6 @@ public class SwerveModule {
   private RelativeEncoder integratedAngleEncoder;
   private CANCoder angleEncoder;
 
-  /* Initialize PID drive and angle */
   private final SparkMaxPIDController driveController;
   private final SparkMaxPIDController angleController;
 
@@ -61,12 +60,6 @@ public class SwerveModule {
 
     lastAngle = getState().angle;
   }
- /**
-   * TODO
-   * 
-   * @param desiredState
-   * @param isOpenLoop
-   */
 
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
     desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
@@ -76,12 +69,6 @@ public class SwerveModule {
     setAngle(desiredState);
     setSpeed(desiredState, isOpenLoop);
   }
-
-/**
-   * 
-   * @param desiredState
-   * @param isOpenLoop
-   */
 
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
     if (isOpenLoop) {
@@ -95,10 +82,7 @@ public class SwerveModule {
           feedforward.calculate(desiredState.speedMetersPerSecond));
     }
   }
-  /**
-   * 
-   * @param desiredState
-   */
+
   private void setAngle(SwerveModuleState desiredState) {
     // Prevent rotating module if speed is less then 1%. Prevents jittering.
     Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
@@ -109,32 +93,21 @@ public class SwerveModule {
     lastAngle = angle;
   }
 
-  /**
-   * 
-   */
   public void resetToAbsolute() {
     double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
     integratedAngleEncoder.setPosition(absolutePosition);
   }
-  /**
-   * 
-   * @return SwerveModulePosition 
-   */
+
   public SwerveModulePosition getPosition() {
     return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
   }
-  /**
-   * 
-   */
+
   private void configAngleEncoder() {
     angleEncoder.configFactoryDefault();
     CANCoderUtil.setCANCoderBusUsage(angleEncoder, CCUsage.kMinimal);
     angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
   }
 
-  /**
-   * 
-   */
   private void configAngleMotor() {
     angleMotor.restoreFactoryDefaults();
     CANSparkMaxUtil.setCANSparkMaxBusUsage(angleMotor, Usage.kPositionOnly);
@@ -154,9 +127,6 @@ public class SwerveModule {
     resetToAbsolute();
   }
 
-  /**
-   * 
-   */
   private void configDriveMotor() {
     driveMotor.restoreFactoryDefaults();
     CANSparkMaxUtil.setCANSparkMaxBusUsage(driveMotor, Usage.kVelocityOnly);
@@ -173,25 +143,15 @@ public class SwerveModule {
     driveMotor.burnFlash();
     driveEncoder.setPosition(0.0);
   }
-/**
- * 
- * @return Rotation2d TODO
- */
+
   public Rotation2d getCanCoder() {
     return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
   }
 
-  /**
-   * 
-   * @return Rotation2d
-   */
   private Rotation2d getAngle() {
     return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
   }
-  /**
-   * 
-   * @return SwerveModulateState
-   */
+
   public SwerveModuleState getState() {
     double velocity = driveEncoder.getVelocity();
     return new SwerveModuleState(velocity, getAngle());
